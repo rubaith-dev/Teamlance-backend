@@ -1,16 +1,33 @@
 const { Router } = require("express");
-const { createCategory } = require("../../controllers/v1");
+const {
+  createCategory,
+  getAllCategories,
+  deleteCategory,
+} = require("../../controllers/v1/category.controller");
 const categoryRoute = Router();
-const { validateBody } = require("../../middlewares");
-const createCategoryDto = require("../../dto/category.dto");
+const { validateReq } = require("../../middlewares");
+const {
+  createCategoryDto,
+  deleteCategoryDto,
+} = require("../../dto/category.dto");
 
+// Add category Route
 categoryRoute.post(
   "/add-category",
-  validateBody(createCategoryDto),
+  validateReq(createCategoryDto),
   createCategory
 );
-// categoryRoute.get("/", getAllProducts);
 
-// categoryRoute.route("/:id").get(getSingleProduct);
+// Get all category route
+categoryRoute.get("/", getAllCategories);
+
+// Delete category route
+categoryRoute.delete(
+  "/:id",
+  validateReq(deleteCategoryDto, "params"),
+  deleteCategory
+);
+
+
 
 module.exports = categoryRoute;

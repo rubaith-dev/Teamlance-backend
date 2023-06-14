@@ -23,7 +23,7 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/api/v1/", categoryRoute);
+app.use("/api/v1/categories", categoryRoute);
 
 app.use(errorHandler);
 

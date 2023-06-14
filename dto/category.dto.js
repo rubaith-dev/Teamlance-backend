@@ -5,4 +5,9 @@ const createCategoryDto = Joi.object({
   name: Joi.string().required(),
 });
 
-module.exports = createCategoryDto;
+// This is for checking the params for delete request
+const deleteCategoryDto = Joi.object({
+  id: Joi.number().required().min(0),
+});
+
+module.exports = {createCategoryDto, deleteCategoryDto};
