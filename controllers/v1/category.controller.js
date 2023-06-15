@@ -67,22 +67,19 @@ const getAllCategories = async (req, res) => {
 const deleteCategory = async (req, res) => {
   const id = parseInt(req.params.id);
   // Check if there is any category with this id|
-  const findCategory = await prisma.category.findUnique({ where: { id } });
+  const findCategory = await prisma.category.findUnique({
+    where: { id },
+    include: { Product: true },
+  });
+
 
   // If no category found return error
   if (!findCategory) {
     return error(res, StatusCodes.NOT_FOUND, "No Category found with this Id");
   }
 
-  // check if this category has product already?
-  const findProductsByCategory = await prisma.product.findMany({
-    where: {
-      categoryId: id,
-    },
-  });
-
   // If there are products associated with category can not delete the category
-  if (findProductsByCategory.length > 0) {
+  if (findCategory.Product.length > 0) {
     return error(
       res,
       StatusCodes.FORBIDDEN,

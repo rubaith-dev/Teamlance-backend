@@ -5,7 +5,7 @@ const {
   deleteCategory,
 } = require("../../controllers/v1/category.controller");
 const categoryRoute = Router();
-const { validateReq } = require("../../middlewares");
+const { validateReq, validateAuth } = require("../../middlewares");
 const {
   createCategoryDto,
   deleteCategoryDto,
