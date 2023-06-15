@@ -19,7 +19,7 @@ categoryRoute.post(
 );
 
 // Get all category route
-categoryRoute.get("/", getAllCategories);
+categoryRoute.get("/",validateAuth, getAllCategories);
 
 // Delete category route
 categoryRoute.delete(

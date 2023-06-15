@@ -13,15 +13,15 @@ const { error, success, errorWithData } = apiResponse;
 
 // Sign up controller
 const signUp = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { userName, password } = req.body;
 
   //Check if the user already exist
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { name: userName } });
 
   // If no existing user already found create the user and set cookie
   if (!user) {
     const user = await prisma.user.create({
-      data: { email, password: await generateHashPassword(password), name },
+      data: { password: await generateHashPassword(password), name: userName },
     });
     return setCookie(req, res, user);
   }
@@ -30,20 +30,20 @@ const signUp = async (req, res) => {
   return error(
     res,
     StatusCodes.BAD_REQUEST,
-    "User already exist with this email"
+    "User already exist with this username"
   );
 };
 
 // Sign in controller
 const signIn = async (req, res) => {
-  const { email, password } = req.body;
+  const { userName, password } = req.body;
 
   //Check if the user exist
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { name:userName } });
 
   // If no existing user found send error
   if (!user) {
-    return error(res, StatusCodes.BAD_REQUEST, "No user found with this email");
+    return error(res, StatusCodes.BAD_REQUEST, "No user found !! Create Account First !!");
   }
 
   // check the user password with database stored password
