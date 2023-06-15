@@ -15,7 +15,7 @@ const createProduct = async (req, res) => {
     where: { id: categoryId },
   });
 
-  // If not create the category and send the success response
+  // If not found category create the category and send the success response
   if (!isCategoryValid) {
     return error(res, StatusCodes.BAD_REQUEST, "Category is not valid");
   }

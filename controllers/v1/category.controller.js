@@ -74,6 +74,22 @@ const deleteCategory = async (req, res) => {
     return error(res, StatusCodes.NOT_FOUND, "No Category found with this Id");
   }
 
+  // check if this category has product already?
+  const findProductsByCategory = await prisma.product.findMany({
+    where: {
+      categoryId: id,
+    },
+  });
+
+  // If there are products associated with category can not delete the category
+  if (findProductsByCategory.length > 0) {
+    return error(
+      res,
+      StatusCodes.FORBIDDEN,
+      "Can't delete a category which has products!!"
+    );
+  }
+
   // Delete the category
   const deleted = await prisma.category.delete({
     where: {
