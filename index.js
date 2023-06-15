@@ -5,7 +5,7 @@ const cors = require("cors");
 // const authRoutes = require("./routes/authRoutes");
 const cookieParser = require("cookie-parser");
 const { errorHandler } = require("./middlewares");
-const { categoryRoute, productRoute } = require("./routes/v1");
+const { categoryRoute, productRoute, authRoute } = require("./routes/v1");
 
 dotenv.config();
 
@@ -19,6 +19,7 @@ app.use(express.json());
 
 app.use("/api/v1/categories", categoryRoute);
 app.use("/api/v1/products", productRoute);
+app.use("/api/v1/auth", authRoute);
 
 app.use(errorHandler);
 
