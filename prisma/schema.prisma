@@ -10,19 +10,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// model User {
+//   id        Int      @id @default(autoincrement())
+//   name      String
+//   email     String   @unique
+//   password  String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
 model Category {
-  id      Int       @id @default(autoincrement())
-  name    String    @unique
-  Product Product[]
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  Product   Product[]
+  createdAt DateTime  @default(now())
 }
 
 model Product {
   id             Int       @id @default(autoincrement())
   productName    String
-  price          Float
-  availability   Boolean
+  price          Int
+  availability   String
   availableSince DateTime?
-
-  categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+  category       Category  @relation(fields: [categoryId], references: [id])
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }

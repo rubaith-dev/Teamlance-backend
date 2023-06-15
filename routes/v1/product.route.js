@@ -1,8 +1,14 @@
-const {Router} = require("express");
+const { Router } = require("express");
+const { validateReq } = require("../../middlewares");
+const { createProductDto } = require("../../dto/product.dto");
+const { createProduct } = require("../../controllers/v1/product.controller");
 
-const productRoutes = Router();
+const productRoute = Router();
 
-productRoutes.post("/add-product", addProduct)
-productRoutes.get("/", getAllProducts)
+productRoute.post("/add-product", validateReq(createProductDto), createProduct);
 
-productRoutes.route("/:id").get(getSingleProduct)
+// productRoutes.get("/", getAllProducts)
+
+// productRoutes.route("/:id").get(getSingleProduct)
+
+module.exports = productRoute;
