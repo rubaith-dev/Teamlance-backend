@@ -14,20 +14,20 @@ const {
 // Add category Route
 categoryRoute.post(
   "/add-category",
+  validateAuth,
   validateReq(createCategoryDto),
   createCategory
 );
 
 // Get all category route
-categoryRoute.get("/",validateAuth, getAllCategories);
+categoryRoute.get("/", validateAuth, getAllCategories);
 
 // Delete category route
 categoryRoute.delete(
   "/:id",
+  validateAuth,
   validateReq(deleteCategoryDto, "params"),
   deleteCategory
 );
-
-
 
 module.exports = categoryRoute;

@@ -1,11 +1,16 @@
 const { Router } = require("express");
-const { validateReq } = require("../../middlewares");
+const { validateReq, validateAuth } = require("../../middlewares");
 const { createProductDto } = require("../../dto/product.dto");
 const { createProduct } = require("../../controllers/v1/product.controller");
 
 const productRoute = Router();
 
-productRoute.post("/add-product", validateReq(createProductDto), createProduct);
+productRoute.post(
+  "/add-product",
+  validateAuth,
+  validateReq(createProductDto),
+  createProduct
+);
 
 // productRoutes.get("/", getAllProducts)
 

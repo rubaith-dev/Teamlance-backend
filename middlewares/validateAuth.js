@@ -7,7 +7,7 @@ const { error: errorResponse } = apiResponse;
 const validateAuth = async (req, res, next) => {
   const token = req.cookies["access-token"];
 
-  
+  console.log(req.body);
   // if no token found response with error
   if (!token) {
     return error(
@@ -19,8 +19,9 @@ const validateAuth = async (req, res, next) => {
 
   // Validate if the token is valid or expired
   try {
-    await jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const decodedToken = await jwt.verify(token, process.env.JWT_SECRET_KEY);
     // Token is valid, proceed to the next middleware
+    req.body.userId = decodedToken.userId
     next();
   } catch (error) {
     if (error.name === "TokenExpiredError") {
@@ -31,7 +32,11 @@ const validateAuth = async (req, res, next) => {
       );
     }
 
-    return errorResponse(res, StatusCodes.UNAUTHORIZED, "Invalid Authoraization Token");
+    return errorResponse(
+      res,
+      StatusCodes.UNAUTHORIZED,
+      "Invalid Authoraization Token"
+    );
   }
 };
 

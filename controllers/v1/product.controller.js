@@ -7,8 +7,10 @@ const { error, success, errorWithData } = apiResponse;
 
 // Create New Product
 const createProduct = async (req, res) => {
-  const { productName, price, availability, categoryId, availableSince } =
+  const { productName, price, availability, categoryId, availableSince, userId } =
     req.body;
+
+    console.log(req.body)
 
   //Find if the categoryid is valid
   const isCategoryValid = await prisma.category.findUnique({
@@ -23,11 +25,12 @@ const createProduct = async (req, res) => {
   // Create New product
   const newProduct = await prisma.product.create({
     data: {
-      productName,
+      name: productName,
       price,
       availability,
       categoryId,
       availableSince,
+      userId
     },
   });
 

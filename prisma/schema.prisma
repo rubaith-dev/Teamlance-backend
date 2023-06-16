@@ -11,10 +11,11 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
   password  String
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+  products  Product[] @relation("UserProducts")
 }
 
 model Category {
@@ -26,12 +27,14 @@ model Category {
 
 model Product {
   id             Int       @id @default(autoincrement())
-  productName    String
-  price          Int
+  name           String
+  price          Float
   availability   String
   availableSince DateTime?
   categoryId     Int
   category       Category  @relation(fields: [categoryId], references: [id])
+  userId         Int
+  User           User      @relation("UserProducts", fields: [userId], references: [id])
   createdAt      DateTime  @default(now())
   updatedAt      DateTime?
 }

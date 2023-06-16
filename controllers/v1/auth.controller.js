@@ -58,4 +58,9 @@ const signIn = async (req, res) => {
   setCookie(req, res, user);
 };
 
-module.exports = { signUp, signIn };
+// Check the user session is valid or not
+const isAuthenticated = async (req, res) =>{
+  return success(res,StatusCodes.OK, "User is loggedin")
+}
+
+module.exports = { signUp, signIn, isAuthenticated };
