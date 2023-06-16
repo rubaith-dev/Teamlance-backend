@@ -6,9 +6,6 @@ const { error: errorResponse } = apiResponse;
 
 const validateAuth = async (req, res, next) => {
   const token = req.cookies["access-token"];
-
-  console.log(req.body);
-  // if no token found response with error
   if (!token) {
     return error(
       res,

@@ -40,7 +40,7 @@ const getAllCategories = async (req, res) => {
   let clientSideData = [];
 
   // If there is data then Format the data to match the select options in the frontend
-  if (findAllCategory.length > 0) {
+
     findAllCategory.forEach(({ id, name }) => {
       clientSideData.push({ value: id, label: name });
     });
@@ -48,18 +48,10 @@ const getAllCategories = async (req, res) => {
     return success(
       res,
       StatusCodes.OK,
-      "Categories found successfully",
+      "Categories fetch successfully",
       clientSideData
     );
-  }
-
-  // If no data found send Error with message and empty array
-  return errorWithData(
-    res,
-    StatusCodes.NOT_FOUND,
-    "No Categories Found",
-    clientSideData
-  );
+  
 };
 
 //Delete a Category

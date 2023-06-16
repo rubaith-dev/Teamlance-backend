@@ -1,7 +1,15 @@
 const { Router } = require("express");
 const { validateReq, validateAuth } = require("../../middlewares");
-const { createProductDto } = require("../../dto/product.dto");
-const { createProduct } = require("../../controllers/v1/product.controller");
+const {
+  createProductDto,
+  updateProductBodyDto,
+  updateProductParamsDto,
+} = require("../../dto/product.dto");
+const {
+  createProduct,
+  getAllProducts,
+  updateProduct,
+} = require("../../controllers/v1/product.controller");
 
 const productRoute = Router();
 
@@ -12,8 +20,14 @@ productRoute.post(
   createProduct
 );
 
-// productRoutes.get("/", getAllProducts)
+productRoute.get("/", validateAuth, getAllProducts);
 
-// productRoutes.route("/:id").get(getSingleProduct)
+productRoute.patch(
+  "/:id",
+  validateAuth,
+  validateReq(updateProductParamsDto, "params"),
+  validateReq(updateProductBodyDto),
+  updateProduct
+);
 
 module.exports = productRoute;

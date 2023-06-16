@@ -30,7 +30,6 @@ model Product {
   name           String
   price          Float
   availability   String
-  availableSince DateTime?
   categoryId     Int
   category       Category  @relation(fields: [categoryId], references: [id])
   userId         Int
