@@ -15,10 +15,13 @@ const {
 
 const productRoute = Router();
 
+// Add product
 productRoute.post("/add-product", validateAuth, validateReq(createProductDto), createProduct);
 
+// get all products
 productRoute.get("/", validateAuth, getAllProducts);
 
+// update a product
 productRoute.patch(
   "/:id",
   validateAuth,
@@ -27,6 +30,7 @@ productRoute.patch(
   updateProduct
 );
 
+// delete a product
 productRoute.delete("", validateAuth, validateReq(deleteProductsDto, "query"), deleteProducts);
 
 module.exports = productRoute;
