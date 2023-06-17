@@ -1,6 +1,20 @@
 # Teamlance Backend
 This is the backend application for Teamlance Assessment, which provides APIs for managing products, categories, and user authentication. It is built with Node.js, Express, and Prisma, and uses PostgreSQL as the database.
 
+- `Node.js` - JavaScript runtime environment
+- `Express` - Web application framework for Node.js
+- `PostgreSQL` - Relational database management system
+- `Prisma` - Database toolkit and ORM
+- `cookie-parser - Middleware for parsing cookies
+- `cors` - Middleware for enabling Cross-Origin Resource Sharing
+- `express-async-errors` - Middleware for unhandled unexpected asynchronous errors in Express if occured so that app doesn't crash
+- `nodemon` - Development tool for automatically restarting the server on file changes
+
+## Some Important notes:
+- #### `your frontend should run on port 3000 if the port doesn't match, the application will break. `
+- #### `As there is cookie based authentication system implemented only localhost:3000 can access the backend resources` 
+- #### `If you open the backend in different port, please make sure you change the port in the .env file of frontend`
+
 ## Prerequisites
 Before running the application, please make sure you have the following dependencies installed on your machine:
 - Node.js (v14 or higher)
