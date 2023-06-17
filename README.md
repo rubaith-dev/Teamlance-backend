@@ -55,7 +55,7 @@ Start the backend server by running the following command:
 `npm run dev/yarn dev`
 
 
-### `The server will be running on http://localhost:3000.`
+### `The server will be running on http://localhost:4000.`
 
 ## API Documentation
 The backend server exposes the following APIs:
