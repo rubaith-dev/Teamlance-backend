@@ -5,7 +5,7 @@ This is the backend application for Teamlance Assessment, which provides APIs fo
 - `Express` - Web application framework for Node.js
 - `PostgreSQL` - Relational database management system
 - `Prisma` - Database toolkit and ORM
-- `cookie-parser - Middleware for parsing cookies
+- `cookie-parser` - Middleware for parsing cookies
 - `cors` - Middleware for enabling Cross-Origin Resource Sharing
 - `express-async-errors` - Middleware for unhandled unexpected asynchronous errors in Express if occured so that app doesn't crash
 - `nodemon` - Development tool for automatically restarting the server on file changes
