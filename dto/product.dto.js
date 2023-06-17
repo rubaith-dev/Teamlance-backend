@@ -23,4 +23,8 @@ const updateProductParamsDto = Joi.object({
   id: Joi.number().required().min(0)
 });
 
-module.exports = { createProductDto, updateProductBodyDto, updateProductParamsDto };
+const deleteProductsDto = Joi.object({
+  productIds: Joi.string().required()
+})
+
+module.exports = { createProductDto, updateProductBodyDto, updateProductParamsDto, deleteProductsDto };

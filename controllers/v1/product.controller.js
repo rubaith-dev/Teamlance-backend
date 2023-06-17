@@ -31,21 +31,32 @@ const createProduct = async (req, res) => {
   });
 
   //
-  return success(
-    res,
-    StatusCodes.CREATED,
-    "Product Created Successfully",
-    newProduct
-  );
+  return success(res, StatusCodes.CREATED, "Product Created Successfully", newProduct);
 };
 
 // Get All product
 const getAllProducts = async (req, res) => {
   const { userId } = req.body;
+  const products = await prisma.product.findMany({
+    where: { userId },
+    include: { category: true },
+    orderBy: { createdAt: "desc" },
+  });
+  
+  // modify response to match with frontend
+  const filteredProducts = products.map((product) => {
+    const { categoryId, userId, updatedAt, availability, category, ...rest } = product;
+    let modifiedAvailability = { label: availability, value: availability };
+    let modifiedCategory = { label: category.name, value: categoryId };
 
-  const products = await prisma.product.findMany({ where: { userId } });
+    return {
+      availability: modifiedAvailability,
+      category: modifiedCategory,
+      ...rest,
+    };
+  });
 
-  return success(res, StatusCodes.OK, "Product Fetch Successfull", products);
+  return success(res, StatusCodes.OK, "Product Fetch Successfull", filteredProducts);
 };
 
 // Update a Product
@@ -64,16 +75,11 @@ const updateProduct = async (req, res) => {
   }
 
   if (!product) {
-    return error(
-      res,
-      StatusCodes.NOT_FOUND,
-      "No Product available with this Id"
-    );
+    return error(res, StatusCodes.NOT_FOUND, "No Product available with this Id");
   }
 
   const updatedProduct = await prisma.product.update({
     where: { id },
-
     data: {
       name: productName,
       price,
@@ -84,12 +90,38 @@ const updateProduct = async (req, res) => {
     },
   });
 
-  return success(
-    res,
-    StatusCodes.OK,
-    "Product Updated Successfully",
-    updatedProduct
-  );
+  return success(res, StatusCodes.OK, "Product Updated Successfully", updatedProduct);
 };
 
-module.exports = { createProduct, getAllProducts, updateProduct };
+const deleteProducts = async (req, res) => {
+  const { userId } = req.body;
+  const { productIds } = req.query;
+
+  const productIdArray = productIds.split(",").map(Number);
+
+  if (productIdArray.some(isNaN)) {
+    return error(res, StatusCodes.BAD_REQUEST, "Invalid Query params");
+  }
+
+  // Perform the deletion query using Prisma
+  const deletedProducts = await prisma.product.deleteMany({
+    where: {
+      id: {
+        in: productIdArray,
+      },
+      userId: userId,
+    },
+  });
+
+  if (deletedProducts.count === 0) {
+    return error(
+      res,
+      StatusCodes.FORBIDDEN,
+      "Products are already deleted or user don't have permission"
+    );
+  }
+
+  return success(res, StatusCodes.OK, "Products deleted successfully");
+};
+
+module.exports = { createProduct, getAllProducts, updateProduct, deleteProducts };
